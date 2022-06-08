@@ -80,9 +80,15 @@ class _NumPointsInGTCalculater:
             v_path = str(Path(self.data_path) / pc_info['velodyne_path'])
         else:
             v_path = pc_info['velodyne_path']
+
+        # todo 对vod进行修改，kitti数据集需要改回
+        # points_v = np.fromfile(
+        #     v_path, dtype=np.float32,
+        #     count=-1).reshape([-1, self.num_features])
         points_v = np.fromfile(
             v_path, dtype=np.float32,
-            count=-1).reshape([-1, self.num_features])
+            count=-1).reshape([-1, 7])[:, 0:self.num_features]
+
         rect = calib['R0_rect']
         Trv2c = calib['Tr_velo_to_cam']
         P2 = calib['P2']
@@ -126,8 +132,12 @@ def _calculate_num_points_in_gt(data_path,
             v_path = str(Path(data_path) / pc_info['velodyne_path'])
         else:
             v_path = pc_info['velodyne_path']
+            # todo 对vod进行修改，kitti数据集需要改回
+        # points_v = np.fromfile(
+        #     v_path, dtype=np.float32, count=-1).reshape([-1, num_features])
         points_v = np.fromfile(
-            v_path, dtype=np.float32, count=-1).reshape([-1, num_features])
+            str(v_path), dtype=np.float32,
+            count=-1).reshape([-1, 7])[:, 0:num_features]
         rect = calib['R0_rect']
         Trv2c = calib['Tr_velo_to_cam']
         P2 = calib['P2']
@@ -330,9 +340,13 @@ def _create_reduced_point_cloud(data_path,
 
         v_path = pc_info['velodyne_path']
         v_path = Path(data_path) / v_path
+        # todo 对vod进行修改，kitti数据集需要改回
+        # points_v = np.fromfile(
+        #     str(v_path), dtype=np.float32,
+        #     count=-1).reshape([-1, num_features])
         points_v = np.fromfile(
             str(v_path), dtype=np.float32,
-            count=-1).reshape([-1, num_features])
+            count=-1).reshape([-1, 7])[:, 0:num_features]
         rect = calib['R0_rect']
         if front_camera_id == 2:
             P2 = calib['P2']

@@ -261,9 +261,12 @@ def get_kitti_image_info(path,
             Tr_velo_to_cam = np.array([
                 float(info) for info in lines[5].split(' ')[1:13]
             ]).reshape([3, 4])
-            Tr_imu_to_velo = np.array([
-                float(info) for info in lines[6].split(' ')[1:13]
-            ]).reshape([3, 4])
+            # todo 对vod进行修改，kitti数据集需要改回
+            # Tr_imu_to_velo vod 信息缺失
+            # Tr_imu_to_velo = np.array([
+            #     float(info) for info in lines[6].split(' ')[1:13]
+            # ]).reshape([3, 4])
+            Tr_imu_to_velo = Tr_velo_to_cam
             if extend_matrix:
                 Tr_velo_to_cam = _extend_matrix(Tr_velo_to_cam)
                 Tr_imu_to_velo = _extend_matrix(Tr_imu_to_velo)
