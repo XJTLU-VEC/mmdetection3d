@@ -1,5 +1,5 @@
 
-## Run PointPillars on VoD Dataset
+## Run VoD Dataset on PointPillars
 
 ### Step 1
 Modify **base_dir** to the path of the data.
